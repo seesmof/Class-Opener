@@ -17,6 +17,7 @@ def open_am():
 
     open_url(url)
     copy_to_clipboard(code)
+    print("Opening AM class.")
 
 
 def open_tznk():
@@ -25,6 +26,7 @@ def open_tznk():
 
     open_url(url)
     copy_to_clipboard(code)
+    print("Opening TZNK class.")
 
 
 schedule.every().wednesday.at("16:25").do(open_tznk)
