@@ -13,12 +13,21 @@ def copy_to_clipboard(text: str):
 
 def open_am():
     url: str = "https://us02web.zoom.us/j/86437456930"
-    open_url(url=url)
-
     code: str = "330748"
+
+    open_url(url)
     copy_to_clipboard(code)
 
 
+def open_tznk():
+    url: str = "https://us02web.zoom.us/j/6067984257"
+    code: str = "964488"
+
+    open_url(url)
+    copy_to_clipboard(code)
+
+
+schedule.every().wednesday.at("16:25").do(open_tznk)
 schedule.every().thursday.at("14:55").do(open_am)
 
 while True:
