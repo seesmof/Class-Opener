@@ -33,5 +33,6 @@ schedule.every().wednesday.at("16:25").do(open_tznk)
 schedule.every().thursday.at("14:55").do(open_am)
 
 while True:
+    print("Running...")
     schedule.run_pending()
     time.sleep(5)
