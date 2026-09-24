@@ -46,6 +46,15 @@ def load_todays_tasks():
 
             class_datetime = t.due.date.strftime("%d.%m.%Y %H:%M")
             class_time = class_datetime.split(" ")[-1]
+
+            # Rule out the classes that are not for today
+            if class_datetime.split(" ")[0] != datetime.date.today().strftime(
+                "%d.%m.%Y"
+            ):
+                continue
+
+            # Give a -3 minutes delay before the class time
+
             entry = ScheduledClass(name_and_type=t.content, time=class_time)
             classes_for_today.append(entry)
 
