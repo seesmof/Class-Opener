@@ -54,8 +54,13 @@ def load_todays_tasks():
                 continue
 
             # Give a -3 minutes delay before the class time
+            wait_minutes_before_class = 3
+            class_hours, class_minutes = class_time.split(":")
+            preponed_time = (
+                f"{class_hours}:{int(class_minutes)-wait_minutes_before_class:02}"
+            )
 
-            entry = ScheduledClass(name_and_type=t.content, time=class_time)
+            entry = ScheduledClass(name_and_type=t.content, time=preponed_time)
             classes_for_today.append(entry)
 
     return classes_for_today
