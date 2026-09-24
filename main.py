@@ -1,4 +1,4 @@
-# My thoughts are not really anything so im thinking of Jesus Christ my Lord Amen! So okay so we need a some kind of a text file where we will store the classes data. Which file format sohuld we use? json? maybe csv though? csv is like a table. okay so i created a text file that will show me this thing. oaky now i wanna read the file for this i will need a current folder. okay yeah i need to read the file. okay so when trying to access the file i have an issue where i not always have the url or the code but i cant account for that, i need to decouple the 3 arguments in case they are there. one option would be to use a pandas dataframe because it allows for missing values. althogh this might be an overkill for the schedule that will need to access. created a csv file but there's still missing values so i should maybe just fill them in with the hoax values or create a json file where i would be able to just assign an empty string to the thing. okay it turns out the .split python method has a max split param. although i have no idea how to use it. lets try the json option. okay the class opening works. okay so the schedule works, i mean the data for the classes. now i gotta figure out how to make a schedule. so for now i have my classes schedule in portal website. i thought of scraping it from there, but it's a weird table where nothing can be understood if looking into the html. so i think to either add the data to google calendar, or a better options which seems to me is to add a schedule to todoist and fetch it from there. i think i will go with the latter. for now i need to test the api key environment variable.
+# My thoughts are not really anything so im thinking of Jesus Christ my Lord Amen! So okay so we need a some kind of a text file where we will store the classes data. Which file format sohuld we use? json? maybe csv though? csv is like a table. okay so i created a text file that will show me this thing. oaky now i wanna read the file for this i will need a current folder. okay yeah i need to read the file. okay so when trying to access the file i have an issue where i not always have the url or the code but i cant account for that, i need to decouple the 3 arguments in case they are there. one option would be to use a pandas dataframe because it allows for missing values. althogh this might be an overkill for the schedule that will need to access. created a csv file but there's still missing values so i should maybe just fill them in with the hoax values or create a json file where i would be able to just assign an empty string to the thing. okay it turns out the .split python method has a max split param. although i have no idea how to use it. lets try the json option. okay the class opening works. okay so the schedule works, i mean the data for the classes. now i gotta figure out how to make a schedule. so for now i have my classes schedule in portal website. i thought of scraping it from there, but it's a weird table where nothing can be understood if looking into the html. so i think to either add the data to google calendar, or a better options which seems to me is to add a schedule to todoist and fetch it from there. i think i will go with the latter. for now i need to test the api key environment variable. okay it all works praise King Jesus, now i just need to add a check if the time of the class is past, or although its okay without it i think.
 
 from dataclasses import dataclass
 import datetime
@@ -89,23 +89,36 @@ def open_class(class_data: Entry):
     copy_to_clipboard(class_data.code) if class_data.code else ""
 
     class_name, class_type = class_data.name_and_type.split(" ")
-    print(f'Opening {class_name}, it is {"Практика" if class_type=="P" else "Лекція"}')
+    print(
+        f'Opening {class_name}, it is a {"practice" if class_type=="P" else "lecture"}.'
+    )
 
 
 def main():
     classes_data = populate_classes_data()
     todays_schedule = load_todays_tasks()
+    if not todays_schedule:
+        print("No classes today.")
+        exit(1)
 
-    open_class(todays_schedule[0])
+    print("Scheduling...")
+    for scheduled_class in todays_schedule:
+        class_data = [
+            data
+            for data in classes_data
+            if data.name_and_type == scheduled_class.name_and_type
+        ][0]
+
+        print(
+            f"Schedule {scheduled_class.name_and_type} for {scheduled_class.time} today."
+        )
+        schedule.every().day.at(scheduled_class.time).do(open_class, class_data)
 
 
 if __name__ == "__main__":
     main()
+    print("\nRunning...")
 
-"""
-schedule.every().wednesday.at("16:25").do(open_tznk)
-while True:
-    print("Running...")
-    schedule.run_pending()
-    time.sleep(5)
-"""
+    while True:
+        schedule.run_pending()
+        time.sleep(12)
