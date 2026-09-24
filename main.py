@@ -31,34 +31,39 @@ def copy_to_clipboard(text: str):
 
 
 def load_todays_tasks():
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    year, month, day = today.split("-")
-
     tasks = todoist_api.get_tasks()
-    proper_tasks = list(tasks)[0]
-    class_tasks = [task for task in proper_tasks if task.due]
+    classes_for_today: list[ScheduledClass] = list()
 
-    return class_tasks
+    for task in tasks:
+        for t in task:
+            if (
+                not t.due
+                or len(t.content) != 4
+                or not " " in t.content
+                or not ("P" in t.content.upper() or "L" in t.content.upper())
+            ):
+                continue
+
+            class_datetime = t.due.date.strftime("%d.%m.%Y %H:%M")
+            class_time = class_datetime.split(" ")[-1]
+            entry = ScheduledClass(name_and_type=t.content, time=class_time)
+            classes_for_today.append(entry)
+
+    return classes_for_today
 
 
 # Data Models
 @dataclass
 class Entry:
-    title_and_type: str
+    name_and_type: str
     url: str
     code: str
 
 
 @dataclass
-class Due:
-    date: datetime.datetime
-    string: str
-
-
-@dataclass
-class Task:
-    content: str
-    due: Due
+class ScheduledClass:
+    name_and_type: str
+    time: str
 
 
 def populate_classes_data(data_file_name: str = "data.json") -> list[Entry]:
@@ -69,12 +74,12 @@ def populate_classes_data(data_file_name: str = "data.json") -> list[Entry]:
         lines = json.load(f)
         for line in lines:
             entry = Entry(
-                title_and_type=line["title_and_type"],
+                name_and_type=line["title_and_type"],
                 url=line["url"],
                 code=line["code"],
             )
             classes_data.append(entry)
-    classes_data = sorted(classes_data, key=lambda entry: entry.title_and_type)
+    classes_data = sorted(classes_data, key=lambda entry: entry.name_and_type)
 
     return classes_data
 
@@ -83,16 +88,15 @@ def open_class(class_data: Entry):
     open_in_browser(class_data.url)
     copy_to_clipboard(class_data.code) if class_data.code else ""
 
-    class_name, type = class_data.title_and_type.split(" ")
-    print(f'Opening {class_name}, it is {"Практика" if type=="P" else "Лекція"}')
+    class_name, class_type = class_data.name_and_type.split(" ")
+    print(f'Opening {class_name}, it is {"Практика" if class_type=="P" else "Лекція"}')
 
 
 def main():
     classes_data = populate_classes_data()
-    today = datetime.datetime.today().strftime("%d.%m.%Y")
-
     todays_schedule = load_todays_tasks()
-    pprint.pprint(todays_schedule)
+
+    open_class(todays_schedule[0])
 
 
 if __name__ == "__main__":

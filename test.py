@@ -1,8 +1,8 @@
-import os
+import datetime
+import time
 
-from dotenv import load_dotenv
-
-api_key_name = "TODOIST_API_KEY"
-load_dotenv()
-data = os.getenv(api_key_name)
-print(data)
+date = datetime.date(2026, 9, 24)
+print(date)
+today = datetime.date.today()
+print(today)
+print(date == today)
