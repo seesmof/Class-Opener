@@ -11,8 +11,16 @@
   },
   { "title_and_type": "MN L", "url": "", "code": "" },
   { "title_and_type": "MN P", "url": "", "code": "" },
-  { "title_and_type": "PM L", "url": "", "code": "" },
-  { "title_and_type": "PM P", "url": "", "code": "" },
+  {
+    "title_and_type": "PM L",
+    "url": "https://teams.microsoft.com/meet/316810464030261?p=BqsPEBzNIaWKTM8a2t",
+    "code": "Kq7Js7p9"
+  },
+  {
+    "title_and_type": "PM P",
+    "url": "https://teams.microsoft.com/meet/316810464030261?p=BqsPEBzNIaWKTM8a2t",
+    "code": "Kq7Js7p9"
+  },
   {
     "title_and_type": "SP L",
     "url": "https://us02web.zoom.us/j/82852383306",

@@ -36,14 +36,15 @@ with open(file_path, encoding="utf-8", mode="r") as f:
 classes_data = sorted(classes_data, key=lambda entry: entry.title_and_type)
 
 
-def open_tznk():
-    url: str = "https://us02web.zoom.us/j/6067984257"
-    code: str = "964488"
+def open_class(class_data: Entry):
+    open_in_browser(class_data.url)
+    copy_to_clipboard(class_data.code)
 
-    open_in_browser(url)
-    copy_to_clipboard(code)
-    print("Opening TZNK class.")
+    class_name, type = class_data.title_and_type.split(" ")
+    print(f'Opening {class_name}, it is {"Практика" if type=="P" else "Лекція"}')
 
+
+open_class(classes_data[0])
 
 """
 schedule.every().wednesday.at("16:25").do(open_tznk)

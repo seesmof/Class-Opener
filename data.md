@@ -1,8 +1,0 @@
-- IP L - https://us04web.zoom.us/j/4684321165?pwd=L1FCaXRRcHkveG5Fd3Y3eWZqTld5UT09 - 0s4SX5
-- IP P - https://us02web.zoom.us/j/5151534723 - 32743
-- MN L -
-- MN P -
-- PM L -
-- PM P -
-- SP L - https://us02web.zoom.us/j/82852383306 - 828188
-- SP P - https://us02web.zoom.us/j/82852383306 - 828188
