@@ -19,8 +19,16 @@
     "url": "https://us02web.zoom.us/j/5151534723",
     "code": "32743"
   },
-  { "title_and_type": "MN L", "url": "", "code": "" },
-  { "title_and_type": "MN P", "url": "", "code": "" },
+  {
+    "title_and_type": "MN L",
+    "url": "https://us02web.zoom.us/j/82541816279",
+    "code": ""
+  },
+  {
+    "title_and_type": "MN P",
+    "url": "https://us02web.zoom.us/j/82541816279",
+    "code": ""
+  },
   {
     "title_and_type": "PM L",
     "url": "https://teams.microsoft.com/meet/316810464030261?p=BqsPEBzNIaWKTM8a2t",
