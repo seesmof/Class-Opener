@@ -1,18 +1,13 @@
-# My thoughts are not really anything so im thinking of Jesus Christ my Lord Amen! So okay so we need a some kind of a text file where we will store the classes data. Which file format sohuld we use? json? maybe csv though? csv is like a table. okay so i created a text file that will show me this thing. oaky now i wanna read the file for this i will need a current folder. okay yeah i need to read the file. okay so when trying to access the file i have an issue where i not always have the url or the code but i cant account for that, i need to decouple the 3 arguments in case they are there. one option would be to use a pandas dataframe because it allows for missing values. althogh this might be an overkill for the schedule that will need to access. created a csv file but there's still missing values so i should maybe just fill them in with the hoax values or create a json file where i would be able to just assign an empty string to the thing. okay it turns out the .split python method has a max split param. although i have no idea how to use it. lets try the json option. okay the class opening works. okay so the schedule works, i mean the data for the classes. now i gotta figure out how to make a schedule. so for now i have my classes schedule in portal website. i thought of scraping it from there, but it's a weird table where nothing can be understood if looking into the html. so i think to either add the data to google calendar, or a better options which seems to me is to add a schedule to todoist and fetch it from there. i think i will go with the latter. for now i need to test the api key environment variable. okay it all works praise King Jesus, now i just need to add a check if the time of the class is past, or although its okay without it i think.
-
+from todoist_api_python.api import TodoistAPI
 from dataclasses import dataclass
+from dotenv import load_dotenv
 import datetime
+import schedule
 import json
 import os
-import pprint
 import time
-from dotenv import load_dotenv
-import schedule
-from todoist_api_python.api import TodoistAPI
 
 load_dotenv()
-
-# Global Variables
 current_dir = os.path.dirname(os.path.abspath(__file__))
 api_key_name = "TODOIST_API_KEY"
 todoist_api_key = os.getenv(
@@ -21,7 +16,6 @@ todoist_api_key = os.getenv(
 todoist_api = TodoistAPI(todoist_api_key)
 
 
-# Helper Functions
 def open_in_browser(url: str):
     os.system(f'start "" {url}')
 
@@ -66,7 +60,6 @@ def load_todays_tasks():
     return classes_for_today
 
 
-# Data Models
 @dataclass
 class Entry:
     name_and_type: str
